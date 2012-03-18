@@ -1,0 +1,53 @@
+﻿<Application x:Class="GameNick_Web.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:my="clr-namespace:GameNick_Web.GameNickServiceReference"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+    <Application.Resources>
+        <CollectionViewSource x:Key="userViewSource" />
+        <CollectionViewSource x:Key="statusViewSource" />
+        <CollectionViewSource x:Key="platformViewSource" />
+        <CollectionViewSource x:Key="gamingEventViewSource" />
+        <CollectionViewSource x:Key="gameNickViewSource" />
+        <CollectionViewSource x:Key="gameViewSource" />
+        <DataTemplate x:Key="DataTemplateStatus">
+            <Grid>
+                <TextBlock x:Name="textBlockMessage"
+                           Text="{Binding Path=Message}"
+                           TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplateGameNicks">
+         
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplateEvents">
+            <Grid>
+                <TextBlock x:Name="textBlock"
+                           Text="{Binding Path=Name}"
+                           TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplateUsers">
+            <Grid>
+                <TextBlock x:Name="textBlock"
+                           Text="{Binding Path=Name}"
+                           TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplatePlatforms">
+            <Grid>
+                <TextBlock x:Name="textBlock"
+                           Text="{Binding Path=Name}"
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Bottom" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DataTemplateGames">
+            <Grid>
+                <TextBlock x:Name="textBlock"
+                           Text="{Binding Path=Name}"
+                           TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
+    </Application.Resources>
+</Application>

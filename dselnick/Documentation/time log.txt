@@ -1,0 +1,113 @@
+
+6:07 PM 9/3/2011 begin
+6:07 PM 9/3/2011 begin adding files to repository
+6:34 PM 9/3/2011 writing up use-cases
+7:17 PM 9/3/2011 begin designing database tables for first few use cases
+7:17 PM 9/3/2011 end
+
+1:40 AM 9/5/2011 begin
+1:40 AM 9/5/2011 begin rough draft of introduction and purpose
+2:06 AM 9/5/2011 completed initial rough draft of introduction and purpose
+2:07 AM 9/5/2011 copied 16 week plan from email to Professor Shafae
+2:07 AM 9/5/2011 end
+
+1:15 PM 9/5/2011 begin
+1:15 PM 9/5/2011 begin adding code and work from the Summer to repository
+1:27 PM 9/5/2011 editing apache in xampp to serve pages from svn directory in addition to normal pages inside of xampp/htdocs
+1:44 PM 9/5/2011 taking too long, will have to ask for help on configuring virtual hosts, this is an administrative problem, not a programmer problem
+1:44 PM 9/5/2011 going to copy the files back and forth until this issue is resolved
+1:51 PM 9/5/2011 added previous work to repository
+2:03 PM 9/5/2011 successfully added source code for website to repository
+2:03 PM 9/5/2011 end
+
+10:00 PM 9/8/2011 begin
+10:00 PM 9/8/2011 begin setting up python and django
+10:33 PM 9/8/2011 research django vs code ignighter
+10:33 PM 9/8/2011 install pytools from pytools.codeplex.com
+10:33 PM 9/8/2011 install python 2.7.7 for win7 x64
+10:55 PM 9/8/2011 installing bitnami django stack
+10:58 PM 9/8/2011 reading python language documentation during installation
+11:08 PM 9/8/2011 exploring django stack
+11:08 PM 9/8/2011 able to render a home page
+11:08 PM 9/8/2011 end
+
+9:40 PM 9/9/2011 begin
+10:33 PM 9/9/2011 created visual studio project for site
+10:33 PM 9/9/2011 going through tutorial https://docs.djangoproject.com/en/dev/intro/tutorial01/
+10:48 PM 9/9/2011 finished part 1
+10:48 PM 9/9/2011 begin part 2 of tutorial
+10:48 PM 9/9/2011 end
+
+1:08 PM 9/11/2011 begin
+3:48 PM 9/11/2011 created windows service application which will interface with database and contain all key data
+3:49 PM 9/11/2011 created c# class library for interacting with windows service application and contain all logic
+3:49 PM 9/11/2011 created windows presentation foundation client application for user interface and contain the view
+3:50 PM 9/11/2011 deleted old files, and added new files to repository
+3:50 PM 9/11/2011 sample code is all working, console application can communicate with service with ease.
+4:07 PM 9/11/2011 began adding Facebook login functionality.
+4:07 PM 9/11/2011 end
+
+
+6:28 PM 9/11/2011 begin
+6:30 PM 9/11/2011 download Facebook SDK to add libraries to GameNick project
+6:48 PM 9/11/2011 successfully added Facebook SDK
+6:48 PM 9/11/2011 Facebook SDK builds
+6:48 PM 9/11/2011 added sample winforms application
+6:48 PM 9/11/2011 end
+
+9:06 PM 9/11/2011 begin
+9:06 PM 9/11/2011 testing Facebook authentication sample
+10:20 PM 9/11/2011 successfully can get a list of friends
+10:20 PM 9/11/2011 learned how to use "dynamic" variable in C# to easily get to JSON data I need.
+10:20 PM 9/11/2011 end
+
+12:38 PM 9/13/2011 begin
+12:38 PM 9/13/2011 adding ui
+12:38 PM 9/13/2011 added basic ui elements
+1:07 PM 9/13/2011 need to determine how to have ui elements listen to data model, and to create a data model
+1:08 PM 9/13/2011 end
+
+9:38 PM 9/13/2011 begin
+9:38 PM 9/13/2011 objective: on login, create list of friends
+9:40 PM 9/13/2011 objective: connect to local database and get linq to sql set-up
+10:15 PM 9/13/2011 attempting to get the service to connect to a database file, have to install sql server sp2, and then management studio
+10:16 PM 9/13/2011 going to model the data
+10:36 PM 9/13/2011 added more ui elemens, so now I know what data is required
+10:36 PM 9/13/2011 end
+
+12:15 AM 9/14/2011 begin
+12:59 AM 9/14/2011 attempted to install sql management studio to configure sql server on vm, having a lot of issues
+12:59 AM 9/14/2011 added code to load a list of friends to the form during it's loading.
+1:00 AM 9/14/2011 end
+
+10:00 AM 9/14/2011 begin
+10:23 AM 9/14/2011 added more UI elements, and tweaked previous UI elements
+10:23 AM 9/14/2011 have a good understanding of what functionality is required to fuel the view and controller
+10:23 AM 9/14/2011 end
+
+8:18 PM 9/15/2011 begin
+9:25 PM 9/15/2011 office hours with professor shafae, discussed how to model data and ui
+9:30 PM 9/14/2011 end
+
+9:48 PM 9/15/2011 begin
+9:48 PM 9/15/2011 read up on Windows Communication Foundation technical documentation
+9:48 PM 9/15/2011 figure out how to bind data
+9:48 PM 9/15/2011 figure out how to load data asynchronously
+10:55 PM 9/15/2011 end
+
+12:15 AM 9/16/2011 begin
+12:55 AM 9/16/2011 research on how to bind a label to some data
+12:55 AM 9/16/2011 research on how to use background workers
+12:55 AM 9/16/2011 research on how to use api asynchronous methods instead of background workers
+12:55 AM 9/16/2011 end
+
+8:00 PM 9/16/2011 begin
+9:16 PM 9/16/2011 coded up a storm
+9:17 PM 9/16/2011 end
+
+8:00 PM 9/18/2011 begin
+9:30 PM 9/18/2011 worked on users, services, alias's
+9:30 PM 9/18/2011 end
+
+9:45 PM 9/26/2011 begin
+9:45 PM 9/26/2011 work on it some more

@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="gamenickModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="gamenickModelStoreContainer">
+          <EntitySet Name="Events" EntityType="gamenickModel.Store.Events" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GameNicks" EntityType="gamenickModel.Store.GameNicks" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Games" EntityType="gamenickModel.Store.Games" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Platforms" EntityType="gamenickModel.Store.Platforms" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Services" EntityType="gamenickModel.Store.Services" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Status" EntityType="gamenickModel.Store.Status" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="gamenickModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Events_Games" Association="gamenickModel.Store.FK_Events_Games">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameNicks_Games" Association="gamenickModel.Store.FK_GameNicks_Games">
+            <End Role="Games" EntitySet="Games" />
+            <End Role="GameNicks" EntitySet="GameNicks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameNicks_Users" Association="gamenickModel.Store.FK_GameNicks_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="GameNicks" EntitySet="GameNicks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_Platforms" Association="gamenickModel.Store.FK_Games_Platforms">
+            <End Role="Platforms" EntitySet="Platforms" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_Services" Association="gamenickModel.Store.FK_Games_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="Games" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_Platforms" Association="gamenickModel.Store.FK_Services_Platforms">
+            <End Role="Platforms" EntitySet="Platforms" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Status_GameNicks" Association="gamenickModel.Store.FK_Status_GameNicks">
+            <End Role="GameNicks" EntitySet="GameNicks" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Status_Users" Association="gamenickModel.Store.FK_Status_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GameID" Type="int" Nullable="false" />
+          <Property Name="FacebookID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameNicks">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="GameID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Games">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlatformID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ServiceID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Platforms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PlatformID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GameNickID" Type="int" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="FacebookID" Type="bigint" Nullable="false" />
+          <Property Name="FacebookAccessToken" Type="varchar" MaxLength="1000" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="GameNickAccessToken" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_Events_Games">
+          <End Role="Games" Type="gamenickModel.Store.Games" Multiplicity="1" />
+          <End Role="Events" Type="gamenickModel.Store.Events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Events">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameNicks_Games">
+          <End Role="Games" Type="gamenickModel.Store.Games" Multiplicity="1" />
+          <End Role="GameNicks" Type="gamenickModel.Store.GameNicks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Games">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameNicks">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameNicks_Users">
+          <End Role="Users" Type="gamenickModel.Store.Users" Multiplicity="1" />
+          <End Role="GameNicks" Type="gamenickModel.Store.GameNicks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameNicks">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Games_Platforms">
+          <End Role="Platforms" Type="gamenickModel.Store.Platforms" Multiplicity="1" />
+          <End Role="Games" Type="gamenickModel.Store.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platforms">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Games_Services">
+          <End Role="Services" Type="gamenickModel.Store.Services" Multiplicity="1" />
+          <End Role="Games" Type="gamenickModel.Store.Games" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Games">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_Platforms">
+          <End Role="Platforms" Type="gamenickModel.Store.Platforms" Multiplicity="1" />
+          <End Role="Services" Type="gamenickModel.Store.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platforms">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Status_GameNicks">
+          <End Role="GameNicks" Type="gamenickModel.Store.GameNicks" Multiplicity="1" />
+          <End Role="Status" Type="gamenickModel.Store.Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameNicks">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="GameNickID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Status_Users">
+          <End Role="Users" Type="gamenickModel.Store.Users" Multiplicity="1" />
+          <End Role="Status" Type="gamenickModel.Store.Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GameNickModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="GameNickEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="GameNicks" EntityType="GameNickModel.GameNick" />
+          <EntitySet Name="Games" EntityType="GameNickModel.Game" />
+          <EntitySet Name="Platforms" EntityType="GameNickModel.Platform" />
+          <EntitySet Name="Services" EntityType="GameNickModel.Service" />
+          <EntitySet Name="Users" EntityType="GameNickModel.User" />
+          <AssociationSet Name="FK_GameNicks_Games" Association="GameNickModel.FK_GameNicks_Games">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="GameNick" EntitySet="GameNicks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GameNicks_Users" Association="GameNickModel.FK_GameNicks_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="GameNick" EntitySet="GameNicks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_Platforms" Association="GameNickModel.FK_Games_Platforms">
+            <End Role="Platform" EntitySet="Platforms" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Games_Services" Association="GameNickModel.FK_Games_Services">
+            <End Role="Service" EntitySet="Services" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_Platforms" Association="GameNickModel.FK_Services_Platforms">
+            <End Role="Platform" EntitySet="Platforms" />
+            <End Role="Service" EntitySet="Services" />
+          </AssociationSet>
+          <EntitySet Name="Status" EntityType="GameNickModel.Status" />
+          <AssociationSet Name="FK_Status_GameNicks" Association="GameNickModel.FK_Status_GameNicks">
+            <End Role="GameNick" EntitySet="GameNicks" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Status_Users" Association="GameNickModel.FK_Status_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Status" EntitySet="Status" />
+          </AssociationSet>
+          <EntitySet Name="Events" EntityType="GameNickModel.Event" />
+          <AssociationSet Name="FK_Events_Games" Association="GameNickModel.FK_Events_Games">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="GameNick">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Int32" Name="GameID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Game" Relationship="GameNickModel.FK_GameNicks_Games" FromRole="GameNick" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="GameNickModel.FK_GameNicks_Users" FromRole="GameNick" ToRole="User" />
+          <NavigationProperty Name="Status" Relationship="GameNickModel.FK_Status_GameNicks" FromRole="GameNick" ToRole="Status" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PlatformID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ServiceID" Nullable="false" />
+          <NavigationProperty Name="GameNicks" Relationship="GameNickModel.FK_GameNicks_Games" FromRole="Game" ToRole="GameNick" />
+          <NavigationProperty Name="Platform" Relationship="GameNickModel.FK_Games_Platforms" FromRole="Game" ToRole="Platform" />
+          <NavigationProperty Name="Service" Relationship="GameNickModel.FK_Games_Services" FromRole="Game" ToRole="Service" />
+          <NavigationProperty Name="Events" Relationship="GameNickModel.FK_Events_Games" FromRole="Game" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Platform">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Games" Relationship="GameNickModel.FK_Games_Platforms" FromRole="Platform" ToRole="Game" />
+          <NavigationProperty Name="Services" Relationship="GameNickModel.FK_Services_Platforms" FromRole="Platform" ToRole="Service" />
+        </EntityType>
+        <EntityType Name="Service">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="PlatformID" Nullable="false" />
+          <NavigationProperty Name="Games" Relationship="GameNickModel.FK_Games_Services" FromRole="Service" ToRole="Game" />
+          <NavigationProperty Name="Platform" Relationship="GameNickModel.FK_Services_Platforms" FromRole="Service" ToRole="Platform" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int64" Name="FacebookID" Nullable="false" />
+          <Property Type="String" Name="FacebookAccessToken" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="GameNickAccessToken" />
+          <NavigationProperty Name="GameNicks" Relationship="GameNickModel.FK_GameNicks_Users" FromRole="User" ToRole="GameNick" />
+          <NavigationProperty Name="Status" Relationship="GameNickModel.FK_Status_Users" FromRole="User" ToRole="Status" />
+        </EntityType>
+        <Association Name="FK_GameNicks_Games">
+          <End Type="GameNickModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="GameNickModel.GameNick" Role="GameNick" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameNick">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GameNicks_Users">
+          <End Type="GameNickModel.User" Role="User" Multiplicity="1" />
+          <End Type="GameNickModel.GameNick" Role="GameNick" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GameNick">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Games_Platforms">
+          <End Type="GameNickModel.Platform" Role="Platform" Multiplicity="1" />
+          <End Type="GameNickModel.Game" Role="Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platform">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Games_Services">
+          <End Type="GameNickModel.Service" Role="Service" Multiplicity="1" />
+          <End Type="GameNickModel.Game" Role="Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Service">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_Platforms">
+          <End Type="GameNickModel.Platform" Role="Platform" Multiplicity="1" />
+          <End Type="GameNickModel.Service" Role="Service" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Platform">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Service">
+              <PropertyRef Name="PlatformID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="GameNickID" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <NavigationProperty Name="GameNick" Relationship="GameNickModel.FK_Status_GameNicks" FromRole="Status" ToRole="GameNick" />
+          <NavigationProperty Name="User" Relationship="GameNickModel.FK_Status_Users" FromRole="Status" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Status_GameNicks">
+          <End Type="GameNickModel.GameNick" Role="GameNick" Multiplicity="1" />
+          <End Type="GameNickModel.Status" Role="Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameNick">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="GameNickID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Status_Users">
+          <End Type="GameNickModel.User" Role="User" Multiplicity="1" />
+          <End Type="GameNickModel.Status" Role="Status" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Status">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="GameID" Nullable="false" />
+          <Property Type="Int64" Name="FacebookID" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="GameNickModel.FK_Events_Games" FromRole="Event" ToRole="Game" />
+        </EntityType>
+        <Association Name="FK_Events_Games">
+          <End Type="GameNickModel.Game" Role="Game" Multiplicity="1" />
+          <End Type="GameNickModel.Event" Role="Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="GameID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="gamenickModelStoreContainer" CdmEntityContainer="GameNickEntities">
+          <EntitySetMapping Name="GameNicks">
+            <EntityTypeMapping TypeName="GameNickModel.GameNick">
+              <MappingFragment StoreEntitySet="GameNicks">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="GameNickModel.Game">
+              <MappingFragment StoreEntitySet="Games">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Platforms">
+            <EntityTypeMapping TypeName="GameNickModel.Platform">
+              <MappingFragment StoreEntitySet="Platforms">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="GameNickModel.Service">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="PlatformID" ColumnName="PlatformID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GameNickModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="GameNickAccessToken" ColumnName="GameNickAccessToken" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FacebookAccessToken" ColumnName="FacebookAccessToken" />
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="GameNickModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="GameNickID" ColumnName="GameNickID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="GameNickModel.Event">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="FacebookID" ColumnName="FacebookID" />
+                <ScalarProperty Name="GameID" ColumnName="GameID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="DatabaseGenerationWorkflow" Value="$(VSEFTools)\DBGen\Sync Database Project.xaml" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Default" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="GameNickModel" ZoomLevel="82">
+        <EntityTypeShape EntityType="GameNickModel.GameNick" Width="1.5" PointX="3.375" PointY="2.875" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="GameNickModel.Game" Width="1.5" PointX="5.5" PointY="4.625" Height="2.5571907552083388" />
+        <EntityTypeShape EntityType="GameNickModel.Platform" Width="1.5" PointX="1.25" PointY="4.125" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="GameNickModel.Service" Width="1.5" PointX="3.375" PointY="6.25" Height="1.9802864583333388" />
+        <EntityTypeShape EntityType="GameNickModel.User" Width="1.5" PointX="1.25" PointY="1.375" Height="2.3648893229166674" />
+        <AssociationConnector Association="GameNickModel.FK_GameNicks_Games" >
+          <ConnectorPoint PointX="5.5" PointY="4.9324446614583337" />
+          <ConnectorPoint PointX="4.875" PointY="4.9324446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="GameNickModel.FK_GameNicks_Users" >
+          <ConnectorPoint PointX="2.75" PointY="3.3074446614583337" />
+          <ConnectorPoint PointX="3.375" PointY="3.3074446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="GameNickModel.FK_Games_Platforms" >
+          <ConnectorPoint PointX="2.75" PointY="5.5764346744791675" />
+          <ConnectorPoint PointX="5.5" PointY="5.5764346744791675" />
+        </AssociationConnector>
+        <AssociationConnector Association="GameNickModel.FK_Games_Services" >
+          <ConnectorPoint PointX="4.875" PointY="6.7160953776041694" />
+          <ConnectorPoint PointX="5.5" PointY="6.7160953776041694" />
+        </AssociationConnector>
+        <AssociationConnector Association="GameNickModel.FK_Services_Platforms" >
+          <ConnectorPoint PointX="2.75" PointY="5.9129850260416674" />
+          <ConnectorPoint PointX="3.375" PointY="6.25" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="GameNickModel.Status" Width="1.5" PointX="5.25" PointY="1.625" Height="2.172587890625" />
+        <AssociationConnector Association="GameNickModel.FK_Status_GameNicks" >
+          <ConnectorPoint PointX="4.875" PointY="3.3362939453125" />
+          <ConnectorPoint PointX="5.25" PointY="3.3362939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="GameNickModel.FK_Status_Users" >
+          <ConnectorPoint PointX="2.75" PointY="2.21875" />
+          <ConnectorPoint PointX="5.25" PointY="2.21875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="GameNickModel.Event" Width="1.5" PointX="7.5" PointY="4.875" Height="1.7879850260416674" />
+        <AssociationConnector Association="GameNickModel.FK_Events_Games" >
+          <ConnectorPoint PointX="7" PointY="5.7689925130208337" />
+          <ConnectorPoint PointX="7.5" PointY="5.7689925130208337" />
+        </AssociationConnector>
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

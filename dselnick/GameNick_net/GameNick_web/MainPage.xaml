@@ -1,0 +1,750 @@
+﻿<sdk:Page x:Class="GameNick_Web.MainPage"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:my="clr-namespace:GameNick_Web.GameNickService"
+          xmlns:navigation="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Navigation"
+          xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+          xmlns:System_Windows_Controls_Primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls"
+          x:Name="GameNick_net"
+          Loaded="Page_Loaded"
+          Title="LoginPage Page"
+          d:DesignWidth="800"
+          mc:Ignorable="d"
+          d:DesignHeight="600">
+    <sdk:Page.Resources></sdk:Page.Resources>
+    <Grid>
+        <Grid x:Name="WelcomeGrid"
+              d:IsHidden="True">
+            <Button x:Name="ButtonLoginWithFacebook"
+                    Height="23"
+                    Margin="8,28,0,0"
+                    Width="123"
+                    Click="ButtonLoginWithFacebookClick"
+                    Content="Login With Facebook"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    d:LayoutOverrides="Width, Height" />
+            <TextBlock Margin="8,8,0,0"
+                       HorizontalAlignment="Left"
+                       Text="Hi, welcome to GameNick! To get started, login with Facebook!"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top" />
+            <TextBlock x:Name="TextLoading"
+                       Margin="8,55,0,0"
+                       HorizontalAlignment="Left"
+                       Text="Loading!"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top" />
+            <TextBlock x:Name="TextBlockLoadingStatus"
+                       Margin="8,75,0,0"
+                       HorizontalAlignment="Left"
+                       Text="Status:"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Top" />
+        </Grid>
+        <Grid x:Name="MainGrid"
+              Margin="8"
+              Visibility="Visible"
+              d:Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.687*" />
+                <RowDefinition Height="0.313*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="0.5*" />
+            </Grid.ColumnDefinitions>
+            <sdk:TabControl x:Name="MainTabControl"
+                            Grid.ColumnSpan="2"
+                            Grid.RowSpan="2"
+                            SelectionChanged="MainTabControlSelectionChanged">
+                <sdk:TabItem x:Name="TabFriends"
+                             Background="#FF819CB2"
+                             BorderBrush="#FF8AA2BA"
+                             Header="Friends">
+                    <Grid x:Name="GridFriends"
+                          Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.979*" />
+                            <RowDefinition Height="0.021*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.304*" />
+                            <ColumnDefinition Width="0.696*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="1"
+                              Margin="8"
+                              Background="#FF7E7EAF">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.535*" />
+                                <RowDefinition Height="0.465*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.5*" />
+                            </Grid.ColumnDefinitions>
+                            <Image x:Name="FriendProfilePicture"
+                                   Height="100"
+                                   Margin="8,8,103,0"
+                                   VerticalAlignment="Top" />
+                            <sdk:DataGrid x:Name="dataGridFriendsEvents"
+                                          Grid.Column="1"
+                                          Margin="8,28,8,8"
+                                          AutoGenerateColumns="False"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding GamingEvent}"
+                                          VerticalAlignment="Stretch">
+                                <sdk:DataGrid.Columns>
+                                    <sdk:DataGridTextColumn Binding="{Binding StartTime}"
+                                                            Header="Start Time" />
+                                    <sdk:DataGridTextColumn Binding="{Binding Event.Game.Name}"
+                                                            Header="Game Name" />
+                                    <sdk:DataGridTextColumn Binding="{Binding Name}"
+                                                            Header="Event Name" />
+                                    <sdk:DataGridTemplateColumn Header="Facebook Event Page">
+                                        <sdk:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <HyperlinkButton NavigateUri="{Binding EventPage}"></HyperlinkButton>
+                                            </DataTemplate>
+                                        </sdk:DataGridTemplateColumn.CellTemplate>
+                                    </sdk:DataGridTemplateColumn>
+                                </sdk:DataGrid.Columns>
+                            </sdk:DataGrid>
+                            <sdk:DataGrid x:Name="dataGridFriendsStatus"
+                                          Grid.RowSpan="2"
+                                          Margin="8,132,8,8"
+                                          AutoGenerateColumns="False"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding Status}"
+                                          VerticalAlignment="Stretch">
+                                <sdk:DataGrid.Columns>
+                                    <sdk:DataGridTextColumn Binding="{Binding Message}"
+                                                            Header="Status" />
+                                    <sdk:DataGridTextColumn Binding="{Binding GameNick.Game.Name}"
+                                                            Header="Game Played" />
+                                    <sdk:DataGridTextColumn Binding="{Binding GameNick.Name}"
+                                                            Header="Gamer Name" />
+                                </sdk:DataGrid.Columns>
+                            </sdk:DataGrid>
+                            <sdk:DataGrid x:Name="dataGridFriendsGameNicks"
+                                          Grid.Column="1"
+                                          Grid.Row="1"
+                                          Margin="8,28,8,8"
+                                          AutoGenerateColumns="False"
+                                          HorizontalAlignment="Stretch"
+                                          ItemsSource="{Binding GameNick}"
+                                          VerticalAlignment="Stretch">
+                                <sdk:DataGrid.Columns>
+                                    <sdk:DataGridTextColumn Binding="{Binding Game.Platform.Name}"
+                                                            Header="Platform" />
+                                    <sdk:DataGridTextColumn Binding="{Binding Game.Name}"
+                                                            Header="Game" />
+                                    <sdk:DataGridTextColumn Binding="{Binding Name}"
+                                                            Header="Gamer Name" />
+                                </sdk:DataGrid.Columns>
+                            </sdk:DataGrid>
+                            <TextBlock x:Name="textBlock5"
+                                       Margin="8,112,0,0"
+                                       HorizontalAlignment="Left"
+                                       Text="Friends Status"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top" />
+                            <TextBlock x:Name="textBlock6"
+                                       Grid.Column="1"
+                                       Margin="8,8,0,0"
+                                       HorizontalAlignment="Left"
+                                       Text="Friends Gaming Events"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top" />
+                            <TextBlock x:Name="textBlock7"
+                                       Grid.Column="1"
+                                       Grid.Row="1"
+                                       Margin="8,8,0,0"
+                                       HorizontalAlignment="Left"
+                                       Text="Friends GameNicks"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top"
+                                       d:LayoutOverrides="HorizontalAlignment" />
+                            <TextBlock x:Name="textBlock24"
+                                       Margin="42,49,0,0"
+                                       HorizontalAlignment="Left"
+                                       Text="Profile Picture"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top"
+                                       d:LayoutOverrides="HorizontalAlignment" />
+                            <HyperlinkButton x:Name="hyperLinkFriend"
+                                             Margin="0,92,8,0"
+                                             Content="View Facebook Profile"
+                                             HorizontalAlignment="Right"
+                                             TargetName="_blank"
+                                             VerticalAlignment="Top" />
+                            <TextBlock x:Name="textBlock25"
+                                       Grid.Column="1"
+                                       Height="22"
+                                       Margin="73,137,0,0"
+                                       Width="127"
+                                       HorizontalAlignment="Left"
+                                       Text="COMING SOOON!!!!"
+                                       TextWrapping="Wrap"
+                                       VerticalAlignment="Top" />
+                        </Grid>
+                        <ListBox x:Name="listBoxFriendsFriends"
+                                 Margin="8,28,8,60"
+                                 HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding User}"
+                                 ItemTemplate="{StaticResource DataTemplateUsers}"
+                                 SelectionChanged="ListBoxFriendsSelectionChanged"
+                                 VerticalAlignment="Stretch"></ListBox>
+                        <TextBlock x:Name="textBlock4"
+                                   Margin="8,8,0,0"
+                                   Width="82"
+                                   HorizontalAlignment="Left"
+                                   Text="Your Friends"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock23"
+                                   Margin="8,0,0,8"
+                                   HorizontalAlignment="Left"
+                                   Text="*Don't see many Facebook friends? Invite them to GameNick, and they'll show up here instantly!"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Bottom" />
+                    </Grid>
+                </sdk:TabItem>
+                <sdk:TabItem x:Name="TabMe"
+                             Background="#FF447E77"
+                             Header="Me">
+                    <Grid x:Name="GridMe"
+                          Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.229*" />
+                            <RowDefinition Height="0.771*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="ButtonMeUpdateStatus"
+                                Margin="8,0,0,8"
+                                Width="auto"
+                                Click="ButtonMeUpdateStatusClick"
+                                Content="Update Your Gaming Status"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom" />
+                        <TextBox x:Name="textBoxMeStatusUpdate"
+                                 Margin="8,28,8,34"
+                                 HorizontalAlignment="Stretch"
+                                 Text="What are you playing? Select your GameNick below and add a status here!"
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Stretch" />
+                        <sdk:DataGrid x:Name="dataGridMeGameNicks"
+                                      Grid.Row="1"
+                                      Margin="8,30,8,34"
+                                      AutoGenerateColumns="False"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding}"
+                                      VerticalAlignment="Stretch">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Binding="{Binding Game.Platform.Name}"
+                                                        Header="Platform" />
+                                <sdk:DataGridTextColumn Binding="{Binding Game.Name}"
+                                                        Header="Game" />
+                                <sdk:DataGridTextColumn Binding="{Binding Name}"
+                                                        Header="Gamer Name" />
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+                        <sdk:DataGrid x:Name="dataGridMePastStatus"
+                                      Grid.Column="1"
+                                      Grid.RowSpan="2"
+                                      Margin="8,28,8,34"
+                                      AutoGenerateColumns="False"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding Status}"
+                                      VerticalAlignment="Stretch">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Binding="{Binding Message}"
+                                                        Header="Status" />
+                                <sdk:DataGridTextColumn Binding="{Binding GameNick.Game.Name}"
+                                                        Header="Game Played" />
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+                        <Button x:Name="buttonMeAddGameNick"
+                                Grid.Row="1"
+                                Margin="8,0,0,8"
+                                Width="Auto"
+                                Click="ButtonMeAddGameNickClick"
+                                Content="Add New GameNick"
+                                HorizontalAlignment="Left"
+                                RenderTransformOrigin="0.5,-0.818"
+                                VerticalAlignment="Bottom" />
+                        <Button x:Name="buttonMeRemoveGameNick"
+                                Grid.Row="1"
+                                Margin="0,0,8,8"
+                                Width="Auto"
+                                Click="ButtonMeRemoveGameNickClick"
+                                Content="Remove Selected GameNick"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="textBlock8"
+                                   Grid.Row="1"
+                                   Margin="8,10,0,0"
+                                   Width="Auto"
+                                   HorizontalAlignment="Left"
+                                   Text="Your GameNicks"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock9"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Left"
+                                   RenderTransformOrigin="0.215,0.375"
+                                   Text="Update Status"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock10"
+                                   Grid.Column="1"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Your Past Gaming Status"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                    </Grid>
+                </sdk:TabItem>
+                <sdk:TabItem x:Name="TabEvents"
+                             Header="Events">
+                    <Grid x:Name="GridCreateEvents">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.122*" />
+                            <RowDefinition Height="0.161*" />
+                            <RowDefinition Height="0.367*" />
+                            <RowDefinition Height="0.349*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".3*" />
+                            <ColumnDefinition Width=".3*" />
+                            <ColumnDefinition Width=".3*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="textBoxEventsCreateEventName"
+                                 Grid.Column="0"
+                                 Grid.Row="1"
+                                 Margin="8"
+                                 HorizontalAlignment="Stretch"
+                                 Text=""
+                                 TextWrapping="Wrap"
+                                 VerticalAlignment="Stretch"
+                                 d:LayoutOverrides="HorizontalAlignment" />
+                        <TextBox x:Name="textBoxEventsCreateEventDetails"
+                                 Grid.Column="1"
+                                 Grid.Row="1"
+                                 Margin="8"
+                                 HorizontalAlignment="Stretch"
+                                 Text=""
+                                 TextWrapping="Wrap" />
+                        <ListBox x:Name="listBoxEventsCreatePlatform"
+                                 Grid.Row="3"
+                                 Margin="8,52,8,34"
+                                 HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding Platform}"
+                                 ItemTemplate="{StaticResource DataTemplatePlatforms}"
+                                 SelectionChanged="ListBoxEventsCreatePlatformSelectionChanged"
+                                 VerticalAlignment="Stretch" />
+                        <ListBox x:Name="listBoxEventsCreateGame"
+                                 Grid.Column="1"
+                                 Grid.Row="3"
+                                 Margin="8,52,8,34"
+                                 HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding Game}"
+                                 SelectionChanged="ListBoxEventsCreateGameSelectionChanged"
+                                 VerticalAlignment="Stretch"
+                                 d:LayoutOverrides="Width, HorizontalMargin">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Name}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <sdk:DataGrid x:Name="dataGridEventsCreateFriends"
+                                      Grid.Column="2"
+                                      Grid.RowSpan="4"
+                                      Margin="8,28,8,38"
+                                      Width="237"
+                                      AutoGenerateColumns="False"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding User}"
+                                      VerticalAlignment="Stretch"
+                                      d:LayoutOverrides="GridBox">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Binding="{Binding Name}"
+                                                        Header="Friend Name" />
+                                <sdk:DataGridCheckBoxColumn Header="Invite?" />
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+                        <ComboBox x:Name="comboBoxEventsCreateStartTime"
+                                  Grid.Column="1"
+                                  Grid.Row="2"
+                                  Margin="8,31,8,0"
+                                  Width="Auto"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Top"
+                                  d:LayoutOverrides="Width, HorizontalMargin">
+                            <ComboBoxItem Content="12:00 PM" />
+                            <ComboBoxItem Content="12:30 PM" />
+                            <ComboBoxItem Content="01:00 PM" />
+                            <ComboBoxItem Content="01:30 PM" />
+                            <ComboBoxItem Content="02:00 PM" />
+                            <ComboBoxItem Content="02:30 PM" />
+                            <ComboBoxItem Content="03:00 PM" />
+                            <ComboBoxItem Content="03:30 PM" />
+                            <ComboBoxItem Content="04:00 PM" />
+                            <ComboBoxItem Content="04:30 PM" />
+                            <ComboBoxItem Content="05:00 PM" />
+                            <ComboBoxItem Content="05:30 PM" />
+                            <ComboBoxItem Content="06:00 PM" />
+                            <ComboBoxItem Content="06:30 PM" />
+                            <ComboBoxItem Content="07:00 PM" />
+                            <ComboBoxItem Content="07:30 PM" />
+                            <ComboBoxItem Content="08:00 PM" />
+                            <ComboBoxItem Content="08:30 PM" />
+                            <ComboBoxItem Content="09:00 PM" />
+                            <ComboBoxItem Content="09:30 PM" />
+                            <ComboBoxItem Content="10:00 PM" />
+                            <ComboBoxItem Content="10:30 PM" />
+                            <ComboBoxItem Content="11:00 PM" />
+                            <ComboBoxItem Content="11:30 PM" />
+                            <ComboBoxItem Content="12:00 AM" />
+                            <ComboBoxItem Content="12:30 AM" />
+                            <ComboBoxItem Content="01:00 AM" />
+                            <ComboBoxItem Content="01:30 AM" />
+                            <ComboBoxItem Content="02:00 AM" />
+                            <ComboBoxItem Content="02:30 AM" />
+                            <ComboBoxItem Content="03:00 AM" />
+                            <ComboBoxItem Content="03:30 AM" />
+                            <ComboBoxItem Content="04:00 AM" />
+                            <ComboBoxItem Content="04:30 AM" />
+                            <ComboBoxItem Content="05:00 AM" />
+                            <ComboBoxItem Content="05:30 AM" />
+                            <ComboBoxItem Content="06:00 AM" />
+                            <ComboBoxItem Content="06:30 AM" />
+                            <ComboBoxItem Content="07:00 AM" />
+                            <ComboBoxItem Content="07:30 AM" />
+                            <ComboBoxItem Content="08:00 AM" />
+                            <ComboBoxItem Content="08:30 AM" />
+                            <ComboBoxItem Content="09:00 AM" />
+                            <ComboBoxItem Content="09:30 AM" />
+                            <ComboBoxItem Content="10:00 AM" />
+                            <ComboBoxItem Content="10:30 AM" />
+                            <ComboBoxItem Content="11:00 AM" />
+                            <ComboBoxItem Content="11:30 AM" />
+                        </ComboBox>
+                        <Button x:Name="buttonEventsCreateSubmitNewEvent"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="3"
+                                Margin="8,0,8,8"
+                                Click="ButtonEventsCreateSubmitNewEventClick"
+                                Content="Create Gaming Event"
+                                VerticalAlignment="Bottom" />
+                        <ComboBox x:Name="comboBoxEventsCreateEndTime"
+                                  Grid.Column="1"
+                                  Grid.Row="2"
+                                  Margin="8,75,0,0"
+                                  Width="Auto"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="Top">
+                            <ComboBoxItem Content="12:00 PM" />
+                            <ComboBoxItem Content="12:30 PM" />
+                            <ComboBoxItem Content="01:00 PM" />
+                            <ComboBoxItem Content="01:30 PM" />
+                            <ComboBoxItem Content="02:00 PM" />
+                            <ComboBoxItem Content="02:30 PM" />
+                            <ComboBoxItem Content="03:00 PM" />
+                            <ComboBoxItem Content="03:30 PM" />
+                            <ComboBoxItem Content="04:00 PM" />
+                            <ComboBoxItem Content="04:30 PM" />
+                            <ComboBoxItem Content="05:00 PM" />
+                            <ComboBoxItem Content="05:30 PM" />
+                            <ComboBoxItem Content="06:00 PM" />
+                            <ComboBoxItem Content="06:30 PM" />
+                            <ComboBoxItem Content="07:00 PM" />
+                            <ComboBoxItem Content="07:30 PM" />
+                            <ComboBoxItem Content="08:00 PM" />
+                            <ComboBoxItem Content="08:30 PM" />
+                            <ComboBoxItem Content="09:00 PM" />
+                            <ComboBoxItem Content="09:30 PM" />
+                            <ComboBoxItem Content="10:00 PM" />
+                            <ComboBoxItem Content="10:30 PM" />
+                            <ComboBoxItem Content="11:00 PM" />
+                            <ComboBoxItem Content="11:30 PM" />
+                            <ComboBoxItem Content="12:00 AM" />
+                            <ComboBoxItem Content="12:30 AM" />
+                            <ComboBoxItem Content="01:00 AM" />
+                            <ComboBoxItem Content="01:30 AM" />
+                            <ComboBoxItem Content="02:00 AM" />
+                            <ComboBoxItem Content="02:30 AM" />
+                            <ComboBoxItem Content="03:00 AM" />
+                            <ComboBoxItem Content="03:30 AM" />
+                            <ComboBoxItem Content="04:00 AM" />
+                            <ComboBoxItem Content="04:30 AM" />
+                            <ComboBoxItem Content="05:00 AM" />
+                            <ComboBoxItem Content="05:30 AM" />
+                            <ComboBoxItem Content="06:00 AM" />
+                            <ComboBoxItem Content="06:30 AM" />
+                            <ComboBoxItem Content="07:00 AM" />
+                            <ComboBoxItem Content="07:30 AM" />
+                            <ComboBoxItem Content="08:00 AM" />
+                            <ComboBoxItem Content="08:30 AM" />
+                            <ComboBoxItem Content="09:00 AM" />
+                            <ComboBoxItem Content="09:30 AM" />
+                            <ComboBoxItem Content="10:00 AM" />
+                            <ComboBoxItem Content="10:30 AM" />
+                            <ComboBoxItem Content="11:00 AM" />
+                            <ComboBoxItem Content="11:30 AM" />
+                        </ComboBox>
+                        <sdk:Calendar x:Name="eventsCalendar"
+                                      Grid.Row="2"
+                                      Margin="8,28,0,0"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock"
+                                   Grid.Row="2"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Select Date of Event"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock1"
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Select Start Time of Event"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top"
+                                   d:LayoutOverrides="VerticalAlignment" />
+                        <TextBlock x:Name="textBlock2"
+                                   Grid.Column="1"
+                                   Grid.Row="2"
+                                   Height="16"
+                                   Margin="8,55,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Select End Time Of Event"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock3"
+                                   Margin="8,8,0,0"
+                                   FontSize="18.667"
+                                   HorizontalAlignment="Left"
+                                   Text="Create a Gaming Event!"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock11"
+                                   Margin="8,0,0,8"
+                                   HorizontalAlignment="Left"
+                                   Text="Name of Event"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="textBlock12"
+                                   Grid.Column="1"
+                                   Height="16"
+                                   Margin="8,0,0,8"
+                                   HorizontalAlignment="Left"
+                                   Text="Event Description"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="textBlock13"
+                                   Grid.Row="3"
+                                   Margin="8,8,8,8"
+                                   HorizontalAlignment="Stretch"
+                                   Text="Select Platform of the Event (from your GameNicks)"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock14"
+                                   Grid.Column="1"
+                                   Grid.Row="3"
+                                   Margin="8,8,8,8"
+                                   HorizontalAlignment="Stretch"
+                                   Text="Select Game of the Event (from your GameNicks)"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock15"
+                                   Grid.Column="2"
+                                   Margin="8,8,0,0"
+                                   Width="190"
+                                   HorizontalAlignment="Left"
+                                   Text="Select Friends To Invite To Event"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock16"
+                                   Grid.Column="2"
+                                   Grid.Row="3"
+                                   Height="26"
+                                   Margin="0,0,0,8"
+                                   Width="249"
+                                   HorizontalAlignment="Stretch"
+                                   Text="*Only friends who have this game are listed."
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="textBlock27"
+                                   Grid.Column="2"
+                                   Grid.Row="2"
+                                   Margin="32,64,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="COMING SOOON!!!!"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                    </Grid>
+                </sdk:TabItem>
+                <sdk:TabItem x:Name="TabBrowse"
+                             Header="Browse">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.605*" />
+                            <RowDefinition Height="0.395*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.25*" />
+                        </Grid.ColumnDefinitions>
+                        <ListBox x:Name="listBoxBrowsePlatforms"
+                                 Margin="8,28,8,8"
+                                 HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding Platform}"
+                                 ItemTemplate="{StaticResource DataTemplatePlatforms}"
+                                 MinHeight="200"
+                                 SelectionChanged="ListBoxBrowsePlatformsSelectionChanged"
+                                 VerticalAlignment="Stretch"
+                                 d:LayoutOverrides="Width" />
+                        <ListBox x:Name="listBoxBrowseGames"
+                                 Grid.Row="1"
+                                 Margin="8,28,8,8"
+                                 HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding Game}"
+                                 SelectionChanged="ListBoxBrowseGamesSelectionChanged"
+                                 VerticalAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <sdk:DataGrid x:Name="dataGridBrowseFriends"
+                                      Grid.Column="1"
+                                      Grid.RowSpan="2"
+                                      Margin="8,64,8,8"
+                                      AutoGenerateColumns="False"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding User}"
+                                      MinHeight="250"
+                                      VerticalAlignment="Stretch">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Binding="{Binding Name}"
+                                                        Header="Name" />
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+                        <sdk:DataGrid x:Name="dataGridBrowseStatus"
+                                      Grid.Column="2"
+                                      Grid.RowSpan="2"
+                                      Margin="8,64,8,8"
+                                      AutoGenerateColumns="false"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding Status}"
+                                      MinHeight="250"
+                                      VerticalAlignment="Stretch"
+                                      d:LayoutOverrides="Height">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Binding="{Binding User.Name}"
+                                                        Header="Name" />
+                                <sdk:DataGridTextColumn Binding="{Binding Message}"
+                                                        Header="Message" />
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+                        <sdk:DataGrid x:Name="dataGridBrowseEvents"
+                                      Grid.Column="3"
+                                      Grid.RowSpan="2"
+                                      Margin="8,64,8,8"
+                                      AutoGenerateColumns="False"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding GamingEvent}"
+                                      VerticalAlignment="Stretch"
+                                      d:LayoutOverrides="Height">
+                            <sdk:DataGrid.Columns>
+                                <sdk:DataGridTextColumn Binding="{Binding StartTime}"
+                                                        Header="Start Time" />
+                                <sdk:DataGridTextColumn Binding="{Binding Name}"
+                                                        Header="Event Name" />
+                                <sdk:DataGridTemplateColumn>
+                                    <sdk:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button x:Name="ButtonViewFacebookEvent"
+                                                    Click="ButtonViewFacebookEventClick"
+                                                    Content="View Event" />
+                                        </DataTemplate>
+                                    </sdk:DataGridTemplateColumn.CellTemplate>
+                                </sdk:DataGridTemplateColumn>
+                            </sdk:DataGrid.Columns>
+                        </sdk:DataGrid>
+                        <TextBlock x:Name="textBlock17"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="All Platforms"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock18"
+                                   Grid.Row="1"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Stretch"
+                                   Text="Games on Selected Platform"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock19"
+                                   Grid.Column="1"
+                                   Margin="8,44,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Friends"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock20"
+                                   Grid.Column="2"
+                                   Margin="8,44,0,0"
+                                   Width="101"
+                                   HorizontalAlignment="Left"
+                                   Text="Status Updates"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock21"
+                                   Grid.Column="3"
+                                   Margin="8,44,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Gaming Events"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top"
+                                   d:LayoutOverrides="HorizontalAlignment" />
+                        <TextBlock x:Name="textBlock22"
+                                   Grid.Column="1"
+                                   Margin="8,8,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="Information about selected game:"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                        <TextBlock x:Name="textBlock26"
+                                   Grid.Column="3"
+                                   Margin="24,128,0,0"
+                                   HorizontalAlignment="Left"
+                                   Text="COMING SOOON!!!!"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Top" />
+                    </Grid>
+                </sdk:TabItem>
+            </sdk:TabControl>
+            <sdk:Label x:Name="LabelGameNick"
+                       Grid.Column="1"
+                       Margin="-64,-11,0,0"
+                       Content="GameNick"
+                       FontFamily="Consolas"
+                       FontSize="29.333"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top" />
+        </Grid>
+    </Grid>
+</sdk:Page>
